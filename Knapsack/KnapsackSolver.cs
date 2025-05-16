@@ -24,9 +24,14 @@ public class KnapsackSolver
     long SetBit(long number, int index, bool value)
     {
         if (value)
-            return number | (1L << index);      // Set bit to 1
+            return number | (1L << index);
         else
-            return number & ~(1L << index);     // Set bit to 0
+            return number & ~(1L << index);
+    }
+
+    long FlipBit(long number, int index)
+    {
+        return number ^ (1L << index);
     }
 
     public int CalculateValue(long knapsack)
@@ -58,5 +63,13 @@ public class KnapsackSolver
         if (CalculateValue(taken) > CalculateValue(skipped))
             return taken;
         return skipped;
+    }
+
+    public long[] GenerateNeighbours(long knapsack, int n)
+    {
+        long[] neighbours = new long[n];
+        for (int i = 0; i < n; i++)
+            neighbours[i] = FlipBit(knapsack, i);
+        return neighbours;
     }
 }
