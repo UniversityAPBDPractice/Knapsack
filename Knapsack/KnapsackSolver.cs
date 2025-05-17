@@ -4,10 +4,12 @@ namespace Knapsack;
 
 public class KnapsackSolver
 {
-    private int Size { get; set; }
-    private int[] Weights { get; set; }
-    private int[] Values { get; set; }
-    private int Capacity { get; set; }
+    protected int Size { get; set; }
+    protected int[] Weights { get; set; }
+    protected int[] Values { get; set; }
+    protected int Capacity { get; set; }
+    public KnapsackSolver(){}
+    
     public KnapsackSolver(int[] weights, int[] values, int capacity)
     {
         Size = weights.Length;
@@ -21,7 +23,7 @@ public class KnapsackSolver
         return Solve(0, Capacity, 0b0);
     }
     
-    long SetBit(long number, int index, bool value)
+    public long SetBit(long number, int index, bool value)
     {
         if (value)
             return number | (1L << index);
@@ -29,7 +31,7 @@ public class KnapsackSolver
             return number & ~(1L << index);
     }
 
-    long FlipBit(long number, int index)
+    public long FlipBit(long number, int index)
     {
         return number ^ (1L << index);
     }
@@ -63,13 +65,5 @@ public class KnapsackSolver
         if (CalculateValue(taken) > CalculateValue(skipped))
             return taken;
         return skipped;
-    }
-
-    public long[] GenerateNeighbours(long knapsack, int n)
-    {
-        long[] neighbours = new long[n];
-        for (int i = 0; i < n; i++)
-            neighbours[i] = FlipBit(knapsack, i);
-        return neighbours;
     }
 }
